@@ -1,0 +1,57 @@
+version: "3.9"
+services:
+  hackmachine:
+    build:
+      context: .
+    ports:
+      - "22:22"
+    networks:
+      external:
+        ipv4_address: 192.168.101.99
+  web:
+    image: nimmis/alpine-apache
+    ports:
+      - "80:80"
+    networks:
+      external:
+        ipv4_address: 192.168.101.5
+      internal:
+        ipv4_address: 192.168.150.5
+  single_pivot:
+    image: nimmis/alpine-apache
+    ports:
+      - "8080:80"
+    networks:
+      internal:
+        ipv4_address: 192.168.150.10
+      hidden:
+        ipv4_address: 192.168.200.10
+  double_pivot:
+    image: nimmis/alpine-apache
+    ports:
+      - "8888:80"
+    networks:
+      hidden:
+        ipv4_address: 192.168.200.15
+      
+      
+networks:
+  external:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.101.0/24
+          gateway: 192.168.101.1
+  internal:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 192.168.150.0/24
+        gateway: 192.168.150.1
+  hidden:
+    driver: bridge
+    ipam:
+      config:
+      - subnet: 192.168.200.0/24
+        gateway: 192.168.200.1
+  
