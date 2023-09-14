@@ -6,3 +6,6 @@ to run install docker/docker-compose and run:
 cd docker-pivoting-lab
 docker-compose up
 ```
+
+The machines are running a hackable apache server each and also have an ssh user setup:
+`username: maikroservice password:maikroservice`
